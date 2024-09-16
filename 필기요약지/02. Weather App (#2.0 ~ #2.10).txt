@@ -1,0 +1,49 @@
+Snack
+= 브라우저에서 React-Native App을 만들 수 있게 해주는
+  온라인 코드에디터
+- 홈페이지 [ https://snack.expo.dev/ ]
+
+
+<View />
+= `<div>` 대신 사용하는 element
+
+
+<Text />
+= text 사용 시 필수로 사용하는 element
+
+
+style
+= 일부 style을 사용할 수 없음
+  - border 등
+= 사용법 : `const styles = StyleSheet.create(스타일객체);`
+  - ex.
+      ```
+      <View style={styles.container} />
+      const styles = StyleSheet.create({
+        container: {
+          flex: 1,
+          backgroundColor: "#fff",
+        },
+      });
+      ```
+= 자동 완성 기능 제공
+  - 그냥 객체로 사용해도 되나, 자동 완성 기능을 제공하지 않음
+
+
+StatusBar
+= 3rd-party 패키지로 부터 사용
+
+
+3rd-party Components & API
+= React-Native는 필수로 필요로하는 component와 API만 제공
+  - 유지 관리와 업데이트가 힘들기 때문
+  = Component : 화면에 렌더링할 항목
+  = API : OS와 소통하는 JS코드
+    - ex. Vibration
+= 다른 기능들은 커뮤니티 패키지를 사용해야 함
+  - 홈페이지 [ https://reactnative.directory/ ]
+
+
+Expo SDK
+= Expo 팀이 자체적으로 Packages와 APIs를 만들어 배포함
+- 홈페이지 [ https://docs.expo.dev/versions/latest/ ]

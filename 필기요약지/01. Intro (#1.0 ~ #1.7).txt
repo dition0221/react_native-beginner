@@ -1,0 +1,40 @@
+설치 S/W
+= React-Native는 휴대폰 App을 만드는 것이라서
+  추가적인 S/W가 필요함
+- Android
+  - Android Studio
+  - Java
+  - Android SDK
+  - Simulator
+- iOS (MacOS에서 사용해야 함)
+  - XCode
+  - Simulator
+
+
+React-Native
+= 코드와 OS 사이에 있는 interface
+  - 코드는 iOS 또는 Java Android 코드로 번역이 됨
+= React-Native가 실제로 element를 렌더링하는 것이 아니고,
+  OS에게 렌더링 해달라고 요청하며, OS가 렌더링 함
+  - 휴대폰 안에 있는 브라우저가 아님
+
+
+Expo
+- 홈페이지 [ https://expo.dev/ ]
+= 추가적인 S/W를 사용할 필요없이
+  VSCode를 쓰고, 휴대폰에서 App을 바로 test할 수 있음
+  - 테스트 목적(프로토타입)으로 많이 사용함
+  = 직접 출시할 예정이면, 추가적인 S/W를 설치해야 함
+= 설치법
+  1.. `npm i -g expo-cli`
+    = Mac 사용자라면, `Watchman`을 추가적으로 설치
+      ```
+      brew update
+      brew install watchman
+      ```
+  2.. apple store(`Expo Go`)나 google play store(`Expo`)에서 다운
+= 프로젝트 설치법
+  1.. `npx create-expo-app@latest 프로젝트명 --template`으로 프로젝트 설치하기
+    - `blank` 선택하기
+  2.. `expo login`으로 cli에서 로그인하기
+  3.. `npm start`로 테스트 실행하기
