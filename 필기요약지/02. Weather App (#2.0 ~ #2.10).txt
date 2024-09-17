@@ -13,8 +13,7 @@ Snack
 
 
 style
-= 일부 style을 사용할 수 없음
-  - border 등
+= 일부 style을 사용할 수 없음 (border 등)
 = 사용법 : `const styles = StyleSheet.create(스타일객체);`
   - ex.
       ```
@@ -31,7 +30,7 @@ style
 
 
 StatusBar
-= 3rd-party 패키지로 부터 사용
+= 3rd-party 패키지로부터 사용
 
 
 3rd-party Components & API
@@ -47,3 +46,118 @@ StatusBar
 Expo SDK
 = Expo 팀이 자체적으로 Packages와 APIs를 만들어 배포함
 - 홈페이지 [ https://docs.expo.dev/versions/latest/ ]
+
+
+
+Layout: `flexbox`
+= React-Native에서의 `flexbox`는 Web CSS의 `flexbox`와 거의 같은 방식임
+= 예외 사항
+  - `display`에서 `bloack`, `inline-block`, `grid` 등이 존재하지 않음
+= 사용법 : 컨테이너에서 `flexDirection`을 사용함
+  - { row, column, row-reverse, column-reverse 등 }
+    - 기본값 : `column`
+  - `display: flex`를 사용할 필요가 없음
+  = overflow가 있어도 스크롤을 할 수 없음
+= 너비와 높이에 기반해서 layout을 만들지 않음
+  = 기기마다 화면 크기가 다르기 때문 => 반응형 디자인을 생각해야 함
+    - 대부분의 경우 `width`, `height`를 사용하지 않음
+  = 사용법 : `flex`를 사용해 비율로 계산함
+    - flex 부모를 만들고, 자식을 원하는 비율로 조정 가능
+    - ex.
+      ```
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "tomato" }} />
+        <View style={{ flex: 2, backgroundColor: "teal" }} />
+        <View style={{ flex: 1, backgroundColor: "orange" }} />
+      </View>
+      ```
+
+
+<ScrollView />
+= 스크롤을 사용할 수 있게 해주는 element
+= 사용법
+  = 기존의 `style` 프로퍼티 대신에 `contentContainerStyle` 프로퍼티를 사용해야 함
+  = ScrollView와 자식 요소는 `flex` CSS를 사용할 수 없음
+= props
+  = `horizontal` : 좌우 스크롤을 제공
+    - 미 입력 시 기본값으로 상하 스크롤을 제공
+  = `pagingAbled` : 스크롤을 자유롭게 사용하지 못 하게 막으며, 페이지가 생성되도록 함
+  = `showsHorizontalScrollIndicator` : 가로 스크롤 페이지 표시를 on/off
+    - 기본값 : true
+
+
+Dimensions
+= 사용자의 화면 크기 정보를 얻을 수 있는 API
+= 사용법 : `const { width, height } = Dimensions.get('window');`
+- ex.
+  ```
+  import { Dimensions, ScrollView, View } from "react-native";
+  const { width: SCREEN_WIDTH } = Dimensions.get('window');
+  export default function App() {
+    return (
+      <ScrollView
+        horizontal
+        pagingAbled
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.weather}
+      >
+        <View style={styles.day} />
+        <View style={styles.day} />
+        <View style={styles.day} />
+      </ScrollView>
+    )
+  }
+  const styles = StyleSheet.create({
+    weather: { ... },
+    day: {
+      width: SCREEN_WIDTH,
+    },
+  });
+  ```
+
+
+Location
+= 사용자의 위치 정보를 가져오는 API
+= 설치법 : `expo install expo-location`
+= 사용법
+  1.. 위치 권한 가져오기
+    = `requestForegroundPermissionsAsync()` 메서드를 사용
+      - 전경에서 권한을 물어봄
+      = `granted` 값을 통해 권한이 허용되었는지 확인 가능
+      - ex.
+        ```
+        import * as Location from "expo-location";
+        
+        export default function App() {
+          useEffect(() => {
+            (async function ask() {
+              const { granted } = await Location.requestForegroundPermissionsAsync();
+            })();
+          }, []);
+        }
+        ```
+  2.. 사용자의 위치(경도, 위도) 가져오기
+    = `getCurrentPositionAsync(?옵션)` 메서드를 사용
+      - 옵션
+        - `accuracy` : 위치 정보의 정확성 (값 1~6)
+      - ex. `const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync({ accuracy: 5 });`
+  3. 경도, 위도 값을 사용해 도시, 국가 등의 위치 값을 가져오기
+    = `reverseGeocodeAsync(위치값, ?옵션)` 메서드를 사용
+      - 옵션
+        - `useGoogleMaps` : 
+    - ex. `const 변수명 = await reverseGeocodeAsync({ langitude, longitude}, { useGoogleMaps: false });`
+
+
+<ActivityIndicator />
+= 원형 로딩 아이콘 element
+
+
+아이콘
+= `"@expo/vector-icons"` 패키지로부터 많은 아이콘들을 사용 가능
+= 사용법
+  ```
+  import { 아이콘패밀리명 } from "@expo/vector-icons";
+  <아이콘패밀리명 name="아이콘명" size={크기} color="색깔" />
+  ```
+  = 홈페이지에서 아이콘패밀리와 아이콘 확인 가능
+- 홈페이지 [ https://icons.expo.fyi/ ]
